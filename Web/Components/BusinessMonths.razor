@@ -1,0 +1,23 @@
+@using Models;
+
+<table class="table table-striped">
+    <tr>
+        @foreach (var (year, month) in this.ForTimespamp.GetMonths())
+        {
+            if (month == 1)
+            {
+                <th>@year</th>
+            }
+            <td>@($"{this.MonthNames[month]}")</td>
+        }
+    </tr>
+</table>
+
+@code {
+    [Parameter] public DateTime ForTimestamp { get; set; }
+
+    string[] MonthNames = new[]
+    {
+        "", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+    };
+}
