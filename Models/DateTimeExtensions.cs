@@ -1,5 +1,4 @@
-﻿using System.Linq;
-namespace Models;
+﻿namespace Models;
 
 public static class DateTimeExtensions
 {

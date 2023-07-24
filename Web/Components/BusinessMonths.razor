@@ -2,7 +2,7 @@
 
 <table class="table table-striped">
     <tr>
-        @foreach (var (year, month) in this.ForTimespamp.GetMonths())
+        @foreach (var (year, month) in this.ForTimestamp.GetYearMonths())
         {
             if (month == 1)
             {
