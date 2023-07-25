@@ -1,7 +1,7 @@
 @using Models;
 
 <table class="table table-striped">
-    @foreach (var row in DateTime.UtcNow.GetDecadeMonths().GroupBy(pair => pair.year))
+    @foreach (var row in DateTime.UtcNow.GetDecadeMonths().GroupBy(pair => pair.Year))
     {
         <tr>
         @foreach (var (year, month) in row)
