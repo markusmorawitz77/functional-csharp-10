@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 namespace Models;
 
-public record Month(int Year, int Ordinal);
-
 public static class DateTimeExtensions
 {
     public static IEnumerable<Month> GetYearMonths(this DateTime time) => 
