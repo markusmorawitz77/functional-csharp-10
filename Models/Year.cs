@@ -6,6 +6,11 @@ public record struct Year(int Number)
         ordinal >= 1 && ordinal <= 12 ? new(this, ordinal)
         : throw new ArgumentOutOfRangeException(nameof(ordinal));
     
+    public IEnumerable<Month> TryGetMonth(int ordinal)
+    {
+        if (ordinal >= 1 && ordinal <= 12) yield return new(this, ordinal);
+    }
+
     public IEnumerable<Month> Months => this.GetMonths(this);
 
     public Year DecadeBeginning => new(this.Number / 10 * 10 + 1);
