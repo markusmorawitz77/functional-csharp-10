@@ -1,3 +1,3 @@
 namespace Models;
 
-public record Month(int Year, int Ordinal);
+public record Month(Year Year, int Ordinal);
