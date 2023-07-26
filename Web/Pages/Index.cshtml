@@ -4,13 +4,14 @@
 
 <table class="table table-striped">
     @{int ordinal = 0;}
-    <tr><th>#</th><th>Name</th><th>SKU</th></tr>
+    <tr><th>#</th><th>Name</th><th>SKU</th><th>Barcode</th></tr>
     @foreach (Part part in Model.AllParts.OrderBy(part => part.Name))
     {
         <tr>
             <th>@(++ordinal)</th>
             <td>@part.Name</td>
             <td>@part.Sku.Value</td>
+            <td><img src="data:" /></td>
         </tr>
     }
 </table>
