@@ -1,5 +1,6 @@
 ﻿@page
 @model IndexModel
+@using Models.Media
 @using Models.Types
 
 <table class="table table-striped">
@@ -11,7 +12,7 @@
             <th>@(++ordinal)</th>
             <td>@part.Name</td>
             <td>@part.Sku.Value</td>
-            <td><img src="data:" /></td>
+            <td><img src="data:@part.Sku.ToCode39(25).EncodeBase64().Content" /></td>
         </tr>
     }
 </table>
