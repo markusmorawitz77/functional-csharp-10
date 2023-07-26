@@ -1,7 +1,21 @@
 ﻿@page
 @model IndexModel
+@using Models.Types
+
+<table class="table table-striped">
+    @{int ordinal = 0;}
+    <tr><th>#</th><th>Name</th><th>SKU</th></tr>
+    @foreach (Part part in Model.AllParts.OrderBy(part => part.Name))
+    {
+        <tr>
+            <th>@(++ordinal)</th>
+            <td>@part.Name</td>
+            <td>@part.Sku.Value</td>
+        </tr>
+    }
+</table>
+
+
 @{
     ViewData["Title"] = "Home page";
 }
-
-<component type="typeof(Components.BusinessMonths)" render-mode="Static" param-fortimestamp="@DateTime.UtcNow" />
