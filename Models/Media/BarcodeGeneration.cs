@@ -33,8 +33,36 @@ public static class BarcodeGeneration
         IsAntialias = true,
     };
 
-    private static SKBitmap ToBarcodeBitmap(this SKPaint[] bars, int barHeight) => new(10,10);  
+    private static SKBitmap ToBarcodeBitmap(this SKPaint[] bars, int barHeight)
+    {
+        float horizontalMargin = 5.0f;
+        float verticalMargin = 3.0f;
+        float padding = 2.0f;
+        float barsWidth = bars.Sum(bar => bar.StrokeWidth);
+        float height = barHeight + 2 * verticalMargin;
+        float width = barsWidth + (bars.Length - 1) * padding + 2 * horizontalMargin;
 
+        SKBitmap bitmap = InitializeBitmap(width, height);
+        SKCanvas canvas = new(bitmap);
+
+        float offset = horizontalMargin;
+        foreach (SKPaint bar in bars)
+        {
+            float x = offset + bar.StrokeWidth / 2;
+            canvas.DrawLine(x, verticalMargin, x, barHeight + verticalMargin, bar);
+            offset += bar.StrokeWidth + padding;
+        }
+
+        return bitmap;
+    }
+
+    private static SKBitmap InitializeBitmap(float width, float height)
+    {
+        SKBitmap bitmap = new((int)Math.Ceiling(width), (int)Math.Ceiling(height));
+        SKCanvas canvas = new(bitmap);
+        canvas.Clear(SKColors.White);
+        return bitmap;
+    }
 }
 
 
