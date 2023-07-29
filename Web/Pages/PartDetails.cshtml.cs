@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Types.Components;
 using Models.Types.Media;
 using Models.Media;
+using Models.Media.Types;
 
 namespace Web.Pages;
 
@@ -24,12 +25,12 @@ public class PartDetailsModel : PageModel
         this.BarcodeImage = this.GenerateBarcode(this.Part.Sku);
     }
 
-    private Func<StockKeepingUnit, FileContent> GenerateBarcode =>
-        BarcodeGeneration.ToCode39(this.Margins, this.Style);
+    private BarcodeGenerator GenerateBarcode =>
+        Code39Generator.ToCode39.Apply(this.Margins, this.Style);
 
-    private BarcodeGeneration.Margins Margins => new(
+    private Margins Margins => new(
         Horizontal: 20, Vertical: 10, BarHeight: 200);
     
-    private BarcodeGeneration.Style Style => new(
+    private Style Style => new(
         ThinBarWidth: 4, ThickBarWidth: 10, GapWidth: 6, Padding: 6, Antialias: false);
 }

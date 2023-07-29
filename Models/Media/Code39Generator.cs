@@ -2,22 +2,14 @@
 using Models.Types.Media;
 using Models.Common;
 using SkiaSharp;
+using Models.Media.Types;
 
 namespace Models.Media;
 
-public static class BarcodeGeneration
+
+public static class Code39Generator
 {
-    public record Margins(float Horizontal, float Vertical, float BarHeight);
-    public record Style(float ThinBarWidth, float ThickBarWidth, float GapWidth,
-                        float Padding, bool Antialias);
-
-    public static Func<StockKeepingUnit, FileContent> ToCode39(
-        Margins margins, Style style) =>
-        sku => ToCode39(margins, style, sku);
-    
-
-    public static FileContent ToCode39(
-        Margins margins, Style style, StockKeepingUnit sku) =>
+    public static BarcodeGeneratorEx ToCode39 => (margins, style, sku) =>
         sku.Value.ToCode39Bars().ToCode39Bitmap(margins, style).ToPng();
     
     private static SKBitmap ToCode39Bitmap(

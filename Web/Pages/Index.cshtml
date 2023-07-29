@@ -7,7 +7,7 @@
     <tr><th>#</th><th>Name</th><th>SKU</th><th>Barcode</th><th></th></tr>
     @foreach (Part part in Model.AllParts.OrderBy(part => part.Name))
     {
-        var image = BarcodeGeneration.ToCode39(Model.Margins, Model.Style)(part.Sku);
+        var image = Code39Generator.ToCode39(Model.Margins, Model.Style, part.Sku);
         <tr>
             <th>@(++ordinal)</th>
             <td>@part.Name</td>
