@@ -11,7 +11,6 @@ public delegate FileContent BarcodeGeneratorEx(
 
 public static class BarcodeGeneratorExtensions
 {
-    public static BarcodeGenerator Apply(this BarcodeGeneratorEx f,
-        Margins margins, Style style) =>
+    public static BarcodeGenerator Apply(this BarcodeGeneratorEx f, Margins margins, Style style) =>
         sku => f(margins, style, sku);
 }
