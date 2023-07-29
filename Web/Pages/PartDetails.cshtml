@@ -7,7 +7,7 @@
     <tr><th>Label</th><td>@Model.Part.Name</td></tr>
     <tr>
         <th>Barcode</th>
-        <td><img src="data:@Model.Part.Sku.ToCode39(25).EncodeBase64().Content" /></td>
+        <td><img src="data:@Model.BarcodeImage.EncodeBase64().Content" /></td>
     </tr>
 </table>
 
