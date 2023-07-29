@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Application.Persistence;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Application.Persistence;
-using Models.Types;
+using Models.Types.Components;
 
 namespace Web.Pages;
 

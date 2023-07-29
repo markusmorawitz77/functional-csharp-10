@@ -1,6 +1,6 @@
 using Application.Persistence;
+using Models.Types.Components;
 using TestPersistence;
-using Models.Types;
 
 var builder = WebApplication.CreateBuilder(args);
 

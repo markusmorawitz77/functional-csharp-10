@@ -1,11 +1,10 @@
 ﻿@page
 @model IndexModel
-@using Models.Media
-@using Models.Types
-
+@using Models.Media;
+@using Models.Types.Components;
 <table class="table table-striped">
     @{int ordinal = 0;}
-    <tr><th>#</th><th>Name</th><th>SKU</th><th>Barcode</th></tr>
+    <tr><th>#</th><th>Name</th><th>SKU</th><th>Barcode</th><th></th></tr>
     @foreach (Part part in Model.AllParts.OrderBy(part => part.Name))
     {
         <tr>
@@ -13,10 +12,10 @@
             <td>@part.Name</td>
             <td>@part.Sku.Value</td>
             <td><img src="data:@part.Sku.ToCode39(25).EncodeBase64().Content" /></td>
+            <td><a asp-page="partdetails" asp-route-id="@part.Id">Details</a></td>
         </tr>
     }
 </table>
-
 
 @{
     ViewData["Title"] = "Home page";

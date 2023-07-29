@@ -1,3 +1,3 @@
-﻿namespace Models.Types.Media;
+namespace Models.Types.Media;
 
 public record FileContent(byte[] Content, string MimeType);

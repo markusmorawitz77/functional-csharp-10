@@ -1,23 +1,23 @@
-@using Models;
-
+﻿@using Models.Types.Time;
+@using Models.Time;
 <table class="table table-striped">
     @foreach (Year year in DateTime.UtcNow.ToYear().Decade)
     {
         <tr>
-            <th>@year.Number</th>    
+            <th>@year.Number</th>
             @foreach (Month month in year.Months)
             {
                 <td>@($"{this.MonthNames[month.Ordinal]}")</td>
             }
         </tr>
-    }    
+    }
 </table>
-
 @code {
     [Parameter] public DateTime ForTimestamp { get; set; }
 
     string[] MonthNames = new[]
     {
-        "", "JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+        "", "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+        "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
     };
 }

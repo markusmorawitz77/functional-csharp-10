@@ -1,4 +1,4 @@
-﻿using Models.Types.Media;
+using Models.Types.Media;
 
 namespace Models.Media;
 
