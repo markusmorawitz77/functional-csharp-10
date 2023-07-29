@@ -11,8 +11,13 @@ public static class BarcodeGeneration
     public record Style(float ThinBarWidth, float ThickBarWidth, float GapWidth,
                         float Padding, bool Antialias);
 
+    public static Func<StockKeepingUnit, FileContent> ToCode39(
+        Margins margins, Style style) =>
+        sku => ToCode39(margins, style, sku);
+    
+
     public static FileContent ToCode39(
-        this StockKeepingUnit sku, Margins margins, Style style) =>
+        Margins margins, Style style, StockKeepingUnit sku) =>
         sku.Value.ToCode39Bars().ToCode39Bitmap(margins, style).ToPng();
     
     private static SKBitmap ToCode39Bitmap(
