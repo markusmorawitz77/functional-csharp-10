@@ -1,3 +1,5 @@
 namespace Models.Types.Common;
 
-public record Measure(string Unit);
+public abstract record Measure(string Unit);
+public record DiscreteMeasure(string Unit, uint Value) : Measure(Unit);
+public record ContinuousMeasure(string Unit, decimal Value) : Measure(Unit);
