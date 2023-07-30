@@ -5,6 +5,7 @@ using Models.Types.Common;
 using Models.Types.Products;
 using Microsoft.AspNetCore.Http.Features;
 using System.Data;
+using System.ComponentModel;
 
 namespace Web.Pages;
 
@@ -30,11 +31,13 @@ public class IndexModel : PageModel
     }
 
     private bool IsSupported(AssemblySpecification spec) =>
-        spec.Components
-            .Join(this.Inventory.GetAll(),
-                component => component.part.Id, item => item.part.Id,
-                (c,i) => (part: c.part, requested: c.quantity, available: i.quantity))
-            .Where(row => row.requested.Unit == row.available.Unit)
-            .All(row => row.requested.Value <= row.available.Value);
+        spec.Components.All(component => this.IsSupported(component.part, component.quantity));
+
+    private bool IsSupported(Part part, DiscreteMeasure required) =>
+        this.Inventory.GetAll()
+            .Any(item => 
+                item.part.Id == part.Id && 
+                item.quantity.Unit == required.Unit && 
+                item.quantity.Value >= required.Value);
 
 }
