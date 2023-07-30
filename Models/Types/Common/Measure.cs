@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace Models.Types.Common;
 
 public abstract record Measure(string Unit);
@@ -11,5 +13,14 @@ public static class MeasureExtensions
         {
             DiscreteMeasure or ContinuousMeasure => m,
             _ => throw new ArgumentException("Measure must be either DiscreteMeasure or ContinuousMeasure")
-        }
+        };
+    public static TResult MapAny<TResult>(this Measure m,
+        Func<DiscreteMeasure, TResult> discrete,
+        Func<ContinuousMeasure, TResult> continuous) =>
+        m.AsDiscriminatedUnion() switch
+        {
+            DiscreteMeasure d => discrete(d),
+            ContinuousMeasure c => continuous(c),
+            _ => default!
+        };
 }
