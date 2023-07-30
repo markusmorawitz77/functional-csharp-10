@@ -11,6 +11,7 @@ public static class MeasureTransforms
         DiscreteMeasure d =>
             (d with { Value = (d.Value + 1) / 2 }, d with { Value = d.Value / 2 }),
         ContinuousMeasure c => 
-            (c with { Value = c.Value / 2 }, c with { Value = c.Value / 2 })
+            (c with { Value = c.Value / 2 }, c with { Value = c.Value / 2 }),
+        _ => throw new ArgumentException("Measure must be either DiscreteMeasure or ContinuousMeasure")
     };
 }
