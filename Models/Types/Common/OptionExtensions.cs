@@ -6,11 +6,11 @@ public static class OptionExtensions
         obj is Some<T> some ? new Some<TResult>(map(some.Content)) : new None<TResult>();
 
     public static Option<T> Filter<T>(this Option<T> obj, Func<T, bool> predicate) =>
-        throw new NotImplementedException();
+        obj is Some<T> some && !predicate(some.Content) ? new None<T>() : obj;
 
     public static T Reduce<T>(this Option<T> obj, T substitute) =>
-        throw new NotImplementedException();
+        obj is Some<T> some ? some.Content : substitute;
 
     public static T Reduce<T>(this Option<T> obj, Func<T> substitute) =>
-        throw new NotImplementedException();
+        obj is Some<T> some ? some.Content : substitute();
 }
