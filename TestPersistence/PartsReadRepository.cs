@@ -24,9 +24,8 @@ public class PartsReadRepository : IReadOnlyRepository<Part>
         new Part(Ids[10], "Battery clipper Type A", new StockKeepingUnit("BTCLA")),
     };
 
-    public Option<Part> TryFind(Guid id) => 
-        GetAll().Where(part => part.Id == id)
-        .Select(part => part.Optional()).SingleOrDefault(None.Value);
+    public Option<Part> TryFind(Guid id) =>
+        GetAll().Where(part => part.Id == id).Optional();
 
     private static Guid[] Ids { get; } =
         Enumerable.Range(0, 1000).Select(_ => Guid.NewGuid()).ToArray();

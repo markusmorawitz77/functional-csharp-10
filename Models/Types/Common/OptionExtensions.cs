@@ -13,4 +13,7 @@ public static class OptionExtensions
 
     public static T Reduce<T>(this Option<T> obj, Func<T> substitute) =>
         obj is Some<T> some ? some.Content : substitute();
+
+    public static Option<T> Optional<T>(this IEnumerable<T> list) =>
+        list.Select(item => item.Optional()).FirstOrDefault(None.Value);
 }

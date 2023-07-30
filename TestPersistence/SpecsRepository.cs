@@ -34,8 +34,9 @@ public class SpecsRepository : IReadOnlyRepository<AssemblySpecification>
 
     public IEnumerable<AssemblySpecification> GetAll() => this.Specs;
 
-    public Option<AssemblySpecification> TryFind(Guid id) => Specs.Where(s => s.Id == id)
-        .Select(spec => spec.Optional()).SingleOrDefault(None.Value);
+    public Option<AssemblySpecification> TryFind(Guid id) =>
+        this.Specs.Where(s => s.Id == id)
+            .Optional();
 
     private static Guid[] Ids { get; } =
         Enumerable.Range(0, 1000).Select(_ => Guid.NewGuid()).ToArray();

@@ -7,19 +7,16 @@ namespace TestPersistence;
 public class Inventory : IReadOnlyRepository<(Part part, DiscreteMeasure quantity)>
 {
     private PartsReadRepository Parts { get; } = new();
+    private Random Random { get; } = new(42);
 
     public Option<(Part part, DiscreteMeasure quantity)> TryFind(Guid id) =>
-        this.Parts.TryFind(id).Filter(Exists)
-        .Map(part => (part, QuantityFor(part)));
+        this.Parts.TryFind(id).Filter(Exists).Map(part => (part, QuantityFor(part)));
 
-    private (Part part, DiscreteMeasure quantity) Find(Part part) =>
-        (part, QuantityFor(part));
-
-    private static DiscreteMeasure QuantityFor(Part part) =>
-        new("Piece", Exists(part) ? 1U : 0);
+    private DiscreteMeasure QuantityFor(Part part) =>
+        new("Piece", Exists(part) ? (uint)this.Random.Next(5, 15) : 0);
 
     public IEnumerable<(Part part, DiscreteMeasure quantity)> GetAll() =>
         this.Parts.GetAll().Where(Exists).Select(part => (part, QuantityFor(part)));
 
-    private static bool Exists(Part part) => part.Sku.Value[part.Sku.Value.Length / 2] % 5 == 2;
+    private static bool Exists(Part part) => part.Sku.Value[part.Sku.Value.Length / 2] % 5 > 1;
 }
