@@ -23,7 +23,7 @@ public class PartsReadRepository : IReadOnlyRepository<Part>
         new Part(Ids[10], "Battery clipper Type A", new StockKeepingUnit("BTCLA")),
     };
 
-    public Part Find(Guid id) => GetAll().Single(part => part.Id == id);
+    public IEnumerable<Part> TryFind(Guid id) => GetAll().Where(part => part.Id == id);
 
     private static Guid[] Ids { get; } =
         Enumerable.Range(0, 1000).Select(_ => Guid.NewGuid()).ToArray();

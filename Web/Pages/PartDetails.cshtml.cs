@@ -24,7 +24,7 @@ public class PartDetailsModel : PageModel
 
     public void OnGet(Guid id)
     {
-        this.Part = this.Parts.Find(id);
+        this.Part = this.Parts.TryFind(id).First();
         this.BarcodeImage = this.GenerateBarcode(this.Part.Sku);
     }
 

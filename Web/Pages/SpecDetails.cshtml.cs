@@ -18,6 +18,6 @@ public class SpecDetailsModel : PageModel
 
     public void OnGet(Guid id)
     {
-        this.Specification = this.Specifications.Find(id);
+        this.Specification = this.Specifications.TryFind(id).First();
     }
 }
