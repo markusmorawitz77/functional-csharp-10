@@ -4,6 +4,7 @@ using Models.Types.Components;
 using Models.Types.Media;
 using Models.Media;
 using Models.Media.Types;
+using Web.Configuration;
 
 namespace Web.Pages;
 
@@ -11,9 +12,11 @@ public class PartDetailsModel : PageModel
 {
     IReadOnlyRepository<Part> Parts { get; }
 
-    public PartDetailsModel(IReadOnlyRepository<Part> parts)
+    public PartDetailsModel(
+        IReadOnlyRepository<Part> parts, BarcodeGeneratorFactory barcodeGenerators)
     {
         this.Parts = parts;
+        this.GenerateBarcode = barcodeGenerators.Print;
     }
 
     public Part Part { get; set; } = null!;
@@ -25,12 +28,6 @@ public class PartDetailsModel : PageModel
         this.BarcodeImage = this.GenerateBarcode(this.Part.Sku);
     }
 
-    private BarcodeGenerator GenerateBarcode =>
-        Code39Generator.ToCode39.Apply(this.Margins, this.Style);
+    private BarcodeGenerator GenerateBarcode { get; }
 
-    private BarcodeMargins Margins => new(
-        Horizontal: 20, Vertical: 10, BarHeight: 200);
-    
-    private Code39Style Style => new(
-        ThinBarWidth: 4, ThickBarWidth: 10, GapWidth: 6, Padding: 6, Antialias: false);
 }
