@@ -1,28 +1,26 @@
 ﻿using Application.Persistence;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Types.Components;
-using Models.Types.Media;
-using Models.Media.Types;
-using Web.Configuration;
-using Models.Media;
+using Models.Types.Common;
+using Models.Types.Products;
 
 namespace Web.Pages;
 
 public class IndexModel : PageModel
 {
-    IReadOnlyRepository<Part> Parts { get; }
+    IReadOnlyRepository<AssemblySpecification> Specifications { get; }
 
-    public IndexModel(IReadOnlyRepository<Part> parts, BarcodeGeneratorFactory barcodeGenerators)
+    public IndexModel(
+        IReadOnlyRepository<AssemblySpecification> parts)
     {
-        this.Parts = parts;
-        this.BarcodeGenerator = barcodeGenerators.Inline;
+        this.Specifications = parts;
     }
 
-    public IEnumerable<Part> AllParts { get; set; } = Enumerable.Empty<Part>();
-    public BarcodeGenerator BarcodeGenerator { get; }
+    public IEnumerable<AssemblySpecification> AllProducts { get; set; }
+        = Enumerable.Empty<AssemblySpecification>();
 
     public void OnGet()
     {
-        this.AllParts = this.Parts.GetAll().ToList();
+        this.AllProducts = this.Specifications.GetAll();
     }
 }

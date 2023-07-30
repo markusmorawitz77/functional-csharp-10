@@ -1,5 +1,7 @@
 using Application.Persistence;
 using Models.Types.Components;
+using Models.Types.Products;
+using Models.Types.Common;
 using TestPersistence;
 using Web.Configuration;
 
@@ -9,8 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IReadOnlyRepository<Part>, PartsReadRepository>();
+builder.Services.AddScoped<IReadOnlyRepository<AssemblySpecification>, SpecsRepository>();
+builder.Services.AddScoped<IReadOnlyRepository<(Part part, DiscreteMeasure quantity)>, Inventory>();
 
-IConfigurationSection barcodeFormatSection = 
+IConfigurationSection barcodeFormatSection =
     builder.Configuration.GetSection(BarcodeFormatOptions.BarcodeFormats);
 builder.Services.Configure<BarcodeFormatOptions>(barcodeFormatSection);
 builder.Services.AddSingleton<BarcodeGeneratorFactory>();

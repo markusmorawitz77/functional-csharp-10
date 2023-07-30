@@ -1,0 +1,27 @@
+﻿@page "/specdetails/{id}"
+@model SpecDetailsModel
+<table class="table table-striped">
+    <tr><th>Name</th><td colspan="4">@Model.Specification.Name</td></tr>
+    <tr><th>Description</th><td colspan="4">@Model.Specification.Description</td></tr>
+    @foreach (var row in Model.Specification.Components.Take(1)) 
+    {
+    <tr>
+        <th rowspan="@Model.Specification.Components.Count()">Components</th>
+        <td>@row.part.Name</td>
+        <td>@row.quantity.Unit</td>
+        <td>@row.quantity.Value</td>
+    </tr>
+    }
+    @foreach (var row in Model.Specification.Components.Skip(1)) 
+    {
+        <tr>
+            <td>@row.part.Name</td>
+            <td>@row.quantity.Unit</td>
+            <td>@row.quantity.Value</td>
+        </tr>
+    }
+</table>
+
+@{
+    ViewData["Title"] = "Home page";
+}

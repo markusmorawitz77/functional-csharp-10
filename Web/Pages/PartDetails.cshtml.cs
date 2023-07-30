@@ -29,5 +29,4 @@ public class PartDetailsModel : PageModel
     }
 
     private BarcodeGenerator GenerateBarcode { get; }
-
 }
