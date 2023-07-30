@@ -13,24 +13,24 @@ public static class Code39Generator
         sku.Value.ToCode39Bars().ToCode39Bitmap(margins, style).ToPng();
     
     private static SKBitmap ToCode39Bitmap(
-        this IEnumerable<int> bars, Margins margins, Style style) =>
+        this IEnumerable<int> bars, BarcodeMargins margins, Code39Style style) =>
         bars.ToGraphicalLines(style).ToBarcodeBitmap(margins, style);
     
     private static SKPaint[] ToGraphicalLines(
-        this IEnumerable<int> bars, Style style) =>
+        this IEnumerable<int> bars, Code39Style style) =>
         bars.ToGraphicalLines(Gap(style), ThinBar(style), ThickBar(style));
     
     private static SKPaint[] ToGraphicalLines(
         this IEnumerable<int> bars, params SKPaint[] lines) =>
         bars.Select(bar => lines[bar]).ToArray();
     
-    private static SKPaint ThickBar(Style style) =>
+    private static SKPaint ThickBar(Code39Style style) =>
         Bar(SKColors.Black, style.ThickBarWidth, style.Antialias);
 
-    private static SKPaint ThinBar(Style style) =>
+    private static SKPaint ThinBar(Code39Style style) =>
         Bar(SKColors.Black, style.ThinBarWidth, style.Antialias);
 
-    private static SKPaint Gap(Style style) =>
+    private static SKPaint Gap(Code39Style style) =>
         Bar(SKColors.Transparent, style.GapWidth, style.Antialias);
     
     private static SKPaint Bar(SKColor color, float thickness, bool antialias) => new SKPaint
@@ -43,7 +43,7 @@ public static class Code39Generator
     };
     
     private static SKBitmap ToBarcodeBitmap(
-        this SKPaint[] bars, Margins margins, Style style)
+        this SKPaint[] bars, BarcodeMargins margins, Code39Style style)
     {
         float barsWidth = bars.Sum(bar => bar.StrokeWidth);
         float height = margins.BarHeight + 2 * margins.Vertical;

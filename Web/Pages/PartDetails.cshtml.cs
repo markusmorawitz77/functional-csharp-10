@@ -28,9 +28,9 @@ public class PartDetailsModel : PageModel
     private BarcodeGenerator GenerateBarcode =>
         Code39Generator.ToCode39.Apply(this.Margins, this.Style);
 
-    private Margins Margins => new(
+    private BarcodeMargins Margins => new(
         Horizontal: 20, Vertical: 10, BarHeight: 200);
     
-    private Style Style => new(
+    private Code39Style Style => new(
         ThinBarWidth: 4, ThickBarWidth: 10, GapWidth: 6, Padding: 6, Antialias: false);
 }
