@@ -8,8 +8,9 @@ public class Inventory : IReadOnlyRepository<(Part part, DiscreteMeasure quantit
 {
     private PartsReadRepository Parts { get; } = new();
 
-    public IEnumerable<(Part part, DiscreteMeasure quantity)> TryFind(Guid id) =>
-        this.Parts.TryFind(id).Where(Exists).Select(part => (part, QuantityFor(part)));
+    public Option<(Part part, DiscreteMeasure quantity)> TryFind(Guid id) =>
+        this.Parts.TryFind(id).Filter(Exists)
+        .Map(part => (part, QuantityFor(part)));
 
     private (Part part, DiscreteMeasure quantity) Find(Part part) =>
         (part, QuantityFor(part));

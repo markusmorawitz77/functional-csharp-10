@@ -6,6 +6,7 @@ using Models.Media;
 using Models.Media.Types;
 using Web.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Models.Types.Common;
 
 namespace Web.Pages;
 
@@ -25,12 +26,12 @@ public class PartDetailsModel : PageModel
 
     public IActionResult OnGet(Guid id)  =>
         this.Parts.TryFind(id)
-            .Select(part => {
+            .Map(part => {
                 this.Part = part;
                 this.BarcodeImage = this.GenerateBarcode(part.Sku);
                 return (IActionResult)Page();
             })
-            .SingleOrDefault(NotFound());
+            .Reduce(NotFound);
 
     private BarcodeGenerator GenerateBarcode { get; }
 }

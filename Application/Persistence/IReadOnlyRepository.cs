@@ -1,7 +1,9 @@
+using Models.Types.Common;
+
 namespace Application.Persistence;
 
 public interface IReadOnlyRepository<T>
 {
     IEnumerable<T> GetAll();
-    IEnumerable<T> TryFind(Guid id);
+    Option<T> TryFind(Guid id);
 }

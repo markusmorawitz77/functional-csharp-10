@@ -3,6 +3,7 @@ namespace TestPersistence;
 using Models.Types.Components;
 using Application.Persistence;
 using System.Collections.Generic;
+using Models.Types.Common;
 
 public class PartsReadRepository : IReadOnlyRepository<Part>
 {
@@ -23,7 +24,9 @@ public class PartsReadRepository : IReadOnlyRepository<Part>
         new Part(Ids[10], "Battery clipper Type A", new StockKeepingUnit("BTCLA")),
     };
 
-    public IEnumerable<Part> TryFind(Guid id) => GetAll().Where(part => part.Id == id);
+    public Option<Part> TryFind(Guid id) => 
+        GetAll().Where(part => part.Id == id)
+        .Select(part => part.Optional()).SingleOrDefault(None.Value);
 
     private static Guid[] Ids { get; } =
         Enumerable.Range(0, 1000).Select(_ => Guid.NewGuid()).ToArray();

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Types.Products;
+using Models.Types.Common;
 
 namespace Web.Pages;
 
@@ -19,11 +20,11 @@ public class SpecDetailsModel : PageModel
 
     public IActionResult OnGet(Guid id) =>
         this.Specifications.TryFind(id)
-            .Select(spec => 
+            .Map(spec => 
             {
                 this.Specification = spec;
                 return (IActionResult)Page();
             })
-            .SingleOrDefault(NotFound());
+            .Reduce(NotFound);
     
 }

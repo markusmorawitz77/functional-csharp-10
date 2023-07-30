@@ -2,9 +2,9 @@ namespace Models.Types.Common;
 
 public abstract class Option<T>
 {
-
+    public static implicit operator Option<T>(None _) => new None<T>();
+    public static implicit operator Option<T>(T value) => new Some<T>(value);
 }
-
 
 public static class Option
 {
@@ -25,7 +25,8 @@ public sealed class None<T> : Option<T>
     public override string ToString() => "None";
 }
 
-public static class None
+public class None
 {
+    public static None Value { get; } = new();
     public static None<T> Of<T>() => new();
 }
