@@ -1,4 +1,5 @@
 ﻿using Application.Persistence;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Models.Types.Products;
 
@@ -16,8 +17,13 @@ public class SpecDetailsModel : PageModel
 
     public AssemblySpecification Specification { get; set; } = null!;
 
-    public void OnGet(Guid id)
-    {
-        this.Specification = this.Specifications.TryFind(id).First();
-    }
+    public IActionResult OnGet(Guid id) =>
+        this.Specifications.TryFind(id)
+            .Select(spec => 
+            {
+                this.Specification = spec;
+                return (IActionResult)Page();
+            })
+            .SingleOrDefault(NotFound());
+    
 }
