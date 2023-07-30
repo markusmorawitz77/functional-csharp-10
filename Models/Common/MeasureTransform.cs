@@ -6,11 +6,11 @@ namespace Models.Common;
 public static class MeasureTransforms
 {
     public static (Measure a, Measure b) SplitInHalves(this Measure m) => 
-    m switch
+    m.AsDiscriminatedUnion() switch
     {
         DiscreteMeasure d => SplitInHalves(d),
         ContinuousMeasure c => SplitInHalves(c),
-        _ => throw new ArgumentException("Measure must be either DiscreteMeasure or ContinuousMeasure")
+        _ => default!
     };
 
     private static (Measure a, Measure b) SplitInHalves(this DiscreteMeasure d) =>
