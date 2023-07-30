@@ -3,7 +3,7 @@ namespace Models.Types.Common;
 public static class OptionExtensions
 {
     public static Option<TResult> Map<T,TResult>(this Option<T> obj, Func<T, TResult> map) =>
-        throw new NotImplementedException();
+        obj is Some<T> some ? new Some<TResult>(map(some.Content)) : new None<TResult>();
 
     public static Option<T> Filter<T>(this Option<T> obj, Func<T, bool> predicate) =>
         throw new NotImplementedException();
