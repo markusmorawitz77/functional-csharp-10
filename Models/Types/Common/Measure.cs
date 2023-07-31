@@ -1,8 +1,7 @@
-using System.ComponentModel;
-
 namespace Models.Types.Common;
 
 public abstract record Measure(string Unit);
+
 public record DiscreteMeasure(string Unit, uint Value) : Measure(Unit);
 public record ContinuousMeasure(string Unit, decimal Value) : Measure(Unit);
 
@@ -12,8 +11,10 @@ public static class MeasureExtensions
         m switch
         {
             DiscreteMeasure or ContinuousMeasure => m,
-            _ => throw new ArgumentException("Measure must be either DiscreteMeasure or ContinuousMeasure")
+            _ => throw new InvalidOperationException(
+                    $"Not defined for object of type {m?.GetType().Name ?? "<null>"}")
         };
+    
     public static TResult MapAny<TResult>(this Measure m,
         Func<DiscreteMeasure, TResult> discrete,
         Func<ContinuousMeasure, TResult> continuous) =>

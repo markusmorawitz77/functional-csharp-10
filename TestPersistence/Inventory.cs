@@ -10,13 +10,11 @@ public class Inventory : IReadOnlyRepository<(Part part, DiscreteMeasure quantit
     private Random Random { get; } = new(42);
 
     public Option<(Part part, DiscreteMeasure quantity)> TryFind(Guid id) =>
-        this.Parts.TryFind(id).Filter(Exists).Map(part => (part, QuantityFor(part)));
+        this.Parts.TryFind(id).Map(part => (part, QuantityFor(part)));
 
     private DiscreteMeasure QuantityFor(Part part) =>
-        new("Piece", Exists(part) ? (uint)this.Random.Next(5, 15) : 0);
+        new("Piece", (uint)this.Random.Next(9, 17));
 
     public IEnumerable<(Part part, DiscreteMeasure quantity)> GetAll() =>
-        this.Parts.GetAll().Where(Exists).Select(part => (part, QuantityFor(part)));
-
-    private static bool Exists(Part part) => part.Sku.Value[part.Sku.Value.Length / 2] % 5 > 1;
+        this.Parts.GetAll().Select(part => (part, QuantityFor(part)));
 }

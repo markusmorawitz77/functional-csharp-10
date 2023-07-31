@@ -25,7 +25,8 @@ public class PartsReadRepository : IReadOnlyRepository<Part>
     };
 
     public Option<Part> TryFind(Guid id) =>
-        GetAll().Where(part => part.Id == id).Optional();
+        GetAll().Where(part => part.Id == id)
+            .Select(part => part.Optional()).SingleOrDefault(None.Value);
 
     private static Guid[] Ids { get; } =
         Enumerable.Range(0, 1000).Select(_ => Guid.NewGuid()).ToArray();

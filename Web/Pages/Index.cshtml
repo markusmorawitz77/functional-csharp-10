@@ -1,19 +1,5 @@
 ﻿@page
 @model IndexModel
-@using Models.Types.Products
-<table class="table table-striped">
-    @{int ordinal = 0;}
-    <tr><th>#</th><th>Name</th><th>Description</th><th></th></tr>
-    @foreach (AssemblySpecification spec in Model.AllProducts)
-    {
-        <tr>
-            <th>@(++ordinal)</th>
-            <td>@spec.Name</td>
-            <td>@(spec.Description.Length > 100 ? spec.Description[..100] + "..." : spec.Description)</td>
-            <td><a asp-page="specdetails" asp-route-id="@spec.Id">Details</a></td>
-        </tr>
-    }
-</table>
 
 @{
     ViewData["Title"] = "Home page";

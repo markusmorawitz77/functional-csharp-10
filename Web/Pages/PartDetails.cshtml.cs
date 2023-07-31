@@ -24,11 +24,11 @@ public class PartDetailsModel : PageModel
     public Part Part { get; set; } = null!;
     public FileContent BarcodeImage { get; set; } = null!;
 
-    public IActionResult OnGet(Guid id)  =>
+    public IActionResult OnGet(Guid id) =>
         this.Parts.TryFind(id)
             .Map(part => {
                 this.Part = part;
-                this.BarcodeImage = this.GenerateBarcode(part.Sku);
+                this.BarcodeImage = this.GenerateBarcode(this.Part.Sku);
                 return (IActionResult)Page();
             })
             .Reduce(NotFound);

@@ -1,4 +1,4 @@
-namespace Models.Types.Time;
+namespace Models.Types.Common;
 
 public record Year(int Number)
 {

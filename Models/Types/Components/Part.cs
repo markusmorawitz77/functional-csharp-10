@@ -3,11 +3,12 @@ using Models.Types.Common;
 namespace Models.Types.Components;
 
 public abstract record InventoryItem(Guid Id, string Name, StockKeepingUnit Sku);
+
 public record Part(Guid Id, string Name, StockKeepingUnit Sku)
     : InventoryItem(Id, Name, Sku);
 
 public record Material(Guid Id, string Name, StockKeepingUnit Sku,
-    ContinuousMeasure Quantity)
+                       ContinuousMeasure Quantity)
     : InventoryItem(Id, Name, Sku);
 
 public static class InventoryItemExtensions
@@ -16,8 +17,10 @@ public static class InventoryItemExtensions
         item switch
         {
             Part or Material => item,
-            _ => throw new ArgumentException("InventoryItem must be either Part or Material")
+            _ => throw new InvalidOperationException(
+                $"Not defined for object of type {item?.GetType().Name ?? "<null>"}")
         };
+    
     public static TResult MapAny<TResult>(this InventoryItem item,
         Func<Part, TResult> part,
         Func<Material, TResult> material) =>
